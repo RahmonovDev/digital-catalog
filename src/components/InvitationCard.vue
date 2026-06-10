@@ -1,4 +1,6 @@
 <script setup>
+import { useRouter } from 'vue-router'
+
 const props = defineProps({
   invitation: {
     type: Object,
@@ -6,6 +8,7 @@ const props = defineProps({
   },
 })
 
+const router = useRouter()
 const TELEGRAM_USERNAME = 'Ft_Cards_Fergana'
 
 const formatPrice = (price) => `${new Intl.NumberFormat('uz-UZ').format(price)} so'm`
@@ -14,11 +17,18 @@ const orderText = encodeURIComponent(
 )
 
 const telegramUrl = `https://t.me/${TELEGRAM_USERNAME}?text=${orderText}`
+const openProduct = () => {
+  router.push({ name: 'product', params: { id: props.invitation.id } })
+}
 </script>
 
 <template>
   <article
-    class="flex h-full w-full max-w-72 flex-col overflow-hidden rounded-xl bg-white shadow-md duration-500 hover:scale-105 hover:shadow-xl"
+    class="flex h-full w-full max-w-72 cursor-pointer flex-col overflow-hidden rounded-xl bg-white shadow-md duration-500 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+    role="link"
+    tabindex="0"
+    @click="openProduct"
+    @keydown.enter="openProduct"
   >
     <div class="relative h-56 w-full overflow-hidden rounded-t-xl bg-[#eadfd6]">
       <img
@@ -51,6 +61,7 @@ const telegramUrl = `https://t.me/${TELEGRAM_USERNAME}?text=${orderText}`
           target="_blank"
           rel="noreferrer"
           class="rounded-full bg-[#229ed9] px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-[#168ac0] focus:outline-none focus:ring-2 focus:ring-[#229ed9] focus:ring-offset-2"
+          @click.stop
         >
           Telegram orqali sotib olish
         </a>
