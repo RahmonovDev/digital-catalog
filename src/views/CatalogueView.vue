@@ -25,11 +25,11 @@ const filteredInvitations = computed(() => {
   <main class="min-h-screen bg-[#f5f0eb] text-[#3c2f2a]">
     <section class="mx-auto max-w-6xl px-5 pb-8 pt-14 text-center sm:px-8 sm:pt-20">
       <p class="text-sm font-semibold uppercase tracking-[0.18em] text-[#8a5a44]">
-        To'y taklifnomalari katalogi
+        Taklifnomalar katalogi
       </p>
-      <h1 class="mt-4 text-4xl font-bold sm:text-5xl">Taklifnoma Do'koni</h1>
+      <h1 class="mt-4 text-4xl font-bold sm:text-5xl">FT CARDS</h1>
       <p class="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#6f5a51] sm:text-lg">
-        Sevimli kuningiz uchun nafis, zamonaviy va esda qolarli raqamli taklifnomalarni tanlang.
+        "Taklifnoma - baxtingizning ilk va eng go'zal muhridir."
       </p>
     </section>
 
