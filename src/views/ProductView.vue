@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 
 import { invitations } from '@/data/invitations'
@@ -15,6 +15,23 @@ const router = useRouter()
 const TELEGRAM_USERNAME = 'Ft_Cards_Fergana'
 
 const invitation = computed(() => invitations.find((item) => item.id === Number(props.id)))
+const selectedPhotoIndex = ref(0)
+const photos = computed(() => {
+  if (!invitation.value) return []
+  if (Array.isArray(invitation.value.photos) && invitation.value.photos.length) {
+    return invitation.value.photos
+  }
+
+  return invitation.value.image ? [invitation.value.image] : []
+})
+const selectedPhoto = computed(() => photos.value[selectedPhotoIndex.value] || '')
+
+watch(
+  () => props.id,
+  () => {
+    selectedPhotoIndex.value = 0
+  },
+)
 
 const formatPrice = (price) => `${new Intl.NumberFormat('uz-UZ').format(price)} so'm`
 const telegramUrl = computed(() => {
@@ -40,12 +57,30 @@ const telegramUrl = computed(() => {
       </button>
 
       <div class="grid gap-8 md:grid-cols-[minmax(0,420px)_1fr] md:items-start">
-        <div class="overflow-hidden rounded-lg border border-gray-200 bg-gray-100">
-          <img
-            :src="invitation.image"
-            :alt="`${invitation.name} taklifnomasi`"
-            class="aspect-[3/4] w-full object-cover"
-          />
+        <div>
+          <div class="overflow-hidden rounded-lg border border-gray-200 bg-gray-100">
+            <img
+              :src="selectedPhoto"
+              :alt="`${invitation.name} taklifnomasi`"
+              class="aspect-[3/4] w-full object-cover"
+            />
+          </div>
+          <div v-if="photos.length > 1" class="mt-3 flex gap-2 overflow-x-auto">
+            <button
+              v-for="(photo, index) in photos"
+              :key="photo"
+              type="button"
+              class="h-20 w-16 shrink-0 overflow-hidden rounded-md border bg-gray-100 transition focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+              :class="selectedPhotoIndex === index ? 'border-gray-900' : 'border-gray-200'"
+              @click="selectedPhotoIndex = index"
+            >
+              <img
+                :src="photo"
+                :alt="`${invitation.name} rasmi ${index + 1}`"
+                class="h-full w-full object-cover"
+              />
+            </button>
+          </div>
         </div>
 
         <div class="md:pt-6">

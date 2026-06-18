@@ -5,6 +5,11 @@ export const invitations = [
     category: 'klassik',
     price: 45000,
     image: 'https://placehold.co/400x560/f9e4e8/c0748a?text=Atirgul',
+    photos: [
+      'https://placehold.co/400x560/f9e4e8/c0748a?text=Atirgul+1',
+      'https://placehold.co/400x560/fff1f3/c0748a?text=Atirgul+2',
+      'https://placehold.co/400x560/f6d5dc/c0748a?text=Atirgul+3',
+    ],
     badge: true,
   },
   {
@@ -13,6 +18,11 @@ export const invitations = [
     category: 'zamonaviy',
     price: 55000,
     image: 'https://placehold.co/400x560/e8f0fe/6b8dd6?text=Nilufar',
+    photos: [
+      'https://placehold.co/400x560/e8f0fe/6b8dd6?text=Nilufar+1',
+      'https://placehold.co/400x560/f4f7ff/6b8dd6?text=Nilufar+2',
+      'https://placehold.co/400x560/dce7ff/6b8dd6?text=Nilufar+3',
+    ],
     badge: false,
   },
   {
@@ -21,6 +31,11 @@ export const invitations = [
     category: 'klassik',
     price: 40000,
     image: 'https://placehold.co/400x560/f3ede3/b8864e?text=Yasmin',
+    photos: [
+      'https://placehold.co/400x560/f3ede3/b8864e?text=Yasmin+1',
+      'https://placehold.co/400x560/fff8ec/b8864e?text=Yasmin+2',
+      'https://placehold.co/400x560/e9dcc6/b8864e?text=Yasmin+3',
+    ],
     badge: false,
   },
   {
@@ -29,6 +44,11 @@ export const invitations = [
     category: 'tabiat',
     price: 50000,
     image: 'https://placehold.co/400x560/e8f5e9/5a9e6f?text=Bahor',
+    photos: [
+      'https://placehold.co/400x560/e8f5e9/5a9e6f?text=Bahor+1',
+      'https://placehold.co/400x560/f2fbf3/5a9e6f?text=Bahor+2',
+      'https://placehold.co/400x560/d7efd9/5a9e6f?text=Bahor+3',
+    ],
     badge: true,
   },
   {
@@ -37,6 +57,11 @@ export const invitations = [
     category: 'zamonaviy',
     price: 60000,
     image: 'https://placehold.co/400x560/fce4ec/e57399?text=Shahlo',
+    photos: [
+      'https://placehold.co/400x560/fce4ec/e57399?text=Shahlo+1',
+      'https://placehold.co/400x560/fff0f5/e57399?text=Shahlo+2',
+      'https://placehold.co/400x560/f7d2df/e57399?text=Shahlo+3',
+    ],
     badge: false,
   },
   {
@@ -45,6 +70,11 @@ export const invitations = [
     category: 'tabiat',
     price: 48000,
     image: 'https://placehold.co/400x560/e0f7fa/4db6c8?text=Durona',
+    photos: [
+      'https://placehold.co/400x560/e0f7fa/4db6c8?text=Durona+1',
+      'https://placehold.co/400x560/f0fcfd/4db6c8?text=Durona+2',
+      'https://placehold.co/400x560/cff1f5/4db6c8?text=Durona+3',
+    ],
     badge: false,
   },
 ]
