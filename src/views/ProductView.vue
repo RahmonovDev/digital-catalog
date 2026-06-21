@@ -1,8 +1,8 @@
 <script setup>
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 
-import { invitations } from '@/data/invitations'
+import { fetchInvitations } from '@/api/invitations'
 
 const props = defineProps({
   id: {
@@ -14,7 +14,10 @@ const props = defineProps({
 const router = useRouter()
 const TELEGRAM_USERNAME = 'Ft_Cards_Fergana'
 
-const invitation = computed(() => invitations.find((item) => item.id === Number(props.id)))
+const invitations = ref([])
+const isLoading = ref(true)
+const errorMessage = ref('')
+const invitation = computed(() => invitations.value.find((item) => item.id === Number(props.id)))
 const selectedPhotoIndex = ref(0)
 const photos = computed(() => {
   if (!invitation.value) return []
@@ -43,14 +46,39 @@ const telegramUrl = computed(() => {
 
   return `https://t.me/${TELEGRAM_USERNAME}?text=${orderText}`
 })
+
+onMounted(async () => {
+  try {
+    invitations.value = await fetchInvitations()
+  } catch (error) {
+    errorMessage.value = "Taklifnomani yuklab bo'lmadi."
+    console.error(error)
+  } finally {
+    isLoading.value = false
+  }
+})
 </script>
 
 <template>
-  <main class="min-h-screen bg-white text-gray-900">
-    <section v-if="invitation" class="mx-auto max-w-5xl px-5 py-10 sm:px-8 sm:py-16">
+  <main class="min-h-screen bg-[#eeeeee] text-[#1f6f5f]">
+    <section
+      v-if="isLoading"
+      class="mx-auto max-w-3xl px-5 py-20 text-center text-[#1f6f5f]/70 sm:px-8"
+    >
+      Taklifnoma yuklanmoqda...
+    </section>
+
+    <section
+      v-else-if="errorMessage"
+      class="mx-auto max-w-3xl px-5 py-20 text-center text-[#1f6f5f]/70 sm:px-8"
+    >
+      {{ errorMessage }}
+    </section>
+
+    <section v-else-if="invitation" class="mx-auto max-w-5xl px-5 py-8 sm:px-8 sm:py-10">
       <button
         type="button"
-        class="mb-8 text-xs font-semibold uppercase tracking-widest text-gray-400 transition hover:text-gray-900"
+        class="mb-8 text-xs font-semibold uppercase tracking-widest text-[#2fa084] transition hover:text-[#1f6f5f]"
         @click="router.back()"
       >
         &lt; Orqaga
@@ -58,7 +86,7 @@ const telegramUrl = computed(() => {
 
       <div class="grid gap-8 md:grid-cols-[minmax(0,420px)_1fr] md:items-start">
         <div>
-          <div class="overflow-hidden rounded-lg border border-gray-200 bg-gray-100">
+          <div class="overflow-hidden rounded-lg border border-[#6fcf97] bg-[#6fcf97]/20">
             <img
               :src="selectedPhoto"
               :alt="`${invitation.name} taklifnomasi`"
@@ -70,8 +98,8 @@ const telegramUrl = computed(() => {
               v-for="(photo, index) in photos"
               :key="photo"
               type="button"
-              class="h-20 w-16 shrink-0 overflow-hidden rounded-md border bg-gray-100 transition focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
-              :class="selectedPhotoIndex === index ? 'border-gray-900' : 'border-gray-200'"
+              class="h-20 w-16 shrink-0 overflow-hidden rounded-md border bg-[#6fcf97]/20 transition focus:outline-none focus:ring-2 focus:ring-[#2fa084] focus:ring-offset-2"
+              :class="selectedPhotoIndex === index ? 'border-[#1f6f5f]' : 'border-[#6fcf97]'"
               @click="selectedPhotoIndex = index"
             >
               <img
@@ -84,35 +112,37 @@ const telegramUrl = computed(() => {
         </div>
 
         <div class="md:pt-6">
-          <p class="text-xs font-semibold uppercase tracking-widest text-gray-300">
+          <p class="text-xs font-semibold uppercase tracking-widest text-[#2fa084]">
             {{ invitation.category }}
           </p>
           <div class="mt-3 flex flex-wrap items-center gap-3">
-            <h1 class="font-serif text-4xl font-medium text-gray-900">
+            <h1 class="font-serif text-4xl font-medium text-[#111]">
               {{ invitation.name }}
             </h1>
             <span
               v-if="invitation.badge"
-              class="bg-black px-2 py-1 text-[10px] font-semibold uppercase tracking-widest text-white"
+              class="bg-[#1f6f5f] px-2 py-1 text-[10px] font-semibold uppercase tracking-widest text-white"
             >
               Mashhur
             </span>
           </div>
 
-          <p class="mt-4 text-sm text-gray-400">
+          <p class="mt-4 text-sm text-[#111]">
             {{ formatPrice(invitation.price) }}
           </p>
 
-          <p class="mt-6 max-w-xl text-sm leading-7 text-gray-400">
-            Ushbu raqamli taklifnoma to'y marosimingiz uchun zamonaviy va nafis ko'rinish beradi.
-            Buyurtma berish uchun Telegram orqali yozing.
+          <p class="mt-6 max-w-xl text-sm leading-7 text-[#1f6f5f]/75">
+            {{
+              invitation.description ||
+              "Ushbu raqamli taklifnoma to'y marosimingiz uchun zamonaviy va nafis ko'rinish beradi. Buyurtma berish uchun Telegram orqali yozing."
+            }}
           </p>
 
           <a
             :href="telegramUrl"
             target="_blank"
             rel="noreferrer"
-            class="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#229ed9] px-4 py-3 text-center text-sm font-semibold text-white transition hover:bg-[#168ac0] focus:outline-none focus:ring-2 focus:ring-[#229ed9] focus:ring-offset-2 sm:w-auto sm:min-w-72"
+            class="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#2fa084] px-4 py-3 text-center text-sm font-semibold text-white transition hover:bg-[#1f6f5f] focus:outline-none focus:ring-2 focus:ring-[#2fa084] focus:ring-offset-2 sm:w-auto sm:min-w-72"
           >
             Telegram orqali sotib olish
           </a>
@@ -121,15 +151,15 @@ const telegramUrl = computed(() => {
     </section>
 
     <section v-else class="mx-auto max-w-3xl px-5 py-20 text-center sm:px-8">
-      <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">
+      <p class="text-xs font-semibold uppercase tracking-widest text-[#2fa084]">
         Taklifnoma topilmadi
       </p>
-      <h1 class="mt-4 font-serif text-4xl font-medium text-gray-900">
+      <h1 class="mt-4 font-serif text-4xl font-medium text-[#1f6f5f]">
         Bunday mahsulot mavjud emas
       </h1>
       <RouterLink
         to="/"
-        class="mt-8 inline-flex rounded-full bg-gray-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-black"
+        class="mt-8 inline-flex rounded-full bg-[#2fa084] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#1f6f5f]"
       >
         Katalogga qaytish
       </RouterLink>

@@ -1,8 +1,8 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
+import { fetchInvitations } from '@/api/invitations'
 import InvitationCard from '@/components/InvitationCard.vue'
-import { invitations } from '@/data/invitations'
 
 const categories = [
   { label: 'Hammasi', value: 'all' },
@@ -13,46 +13,78 @@ const categories = [
 ]
 
 const activeCategory = ref('all')
+const invitations = ref([])
+const isLoading = ref(true)
+const errorMessage = ref('')
 
 const filteredInvitations = computed(() => {
-  if (activeCategory.value === 'all') return invitations
+  if (activeCategory.value === 'all') return invitations.value
 
-  return invitations.filter((invitation) => invitation.category === activeCategory.value)
+  return invitations.value.filter((invitation) => invitation.category === activeCategory.value)
+})
+
+onMounted(async () => {
+  try {
+    invitations.value = await fetchInvitations()
+  } catch (error) {
+    errorMessage.value = "Taklifnomalarni yuklab bo'lmadi."
+    console.error(error)
+  } finally {
+    isLoading.value = false
+  }
 })
 </script>
 
 <template>
-  <main class="min-h-screen bg-[#f5f0eb] text-[#3c2f2a]">
-    <section class="mx-auto max-w-6xl px-5 pb-8 pt-14 text-center sm:px-8 sm:pt-20">
-      <p class="text-sm font-semibold uppercase tracking-[0.18em] text-[#8a5a44]">
+  <main class="min-h-screen bg-[#eeeeee] text-[#1f6f5f]">
+    <section class="mx-auto max-w-6xl px-5 pb-8 pt-14 text-center sm:px-8 sm:pt-10">
+      <p class="text-sm font-semibold uppercase tracking-[0.18em] text-[#111]">
         Taklifnomalar katalogi
       </p>
       <h1 class="mt-4 text-4xl font-bold sm:text-5xl">FT CARDS</h1>
-      <p class="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#6f5a51] sm:text-lg">
+      <p class="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#111]/80 sm:text-lg">
         "Taklifnoma - baxtingizning ilk va eng go'zal muhridir."
       </p>
     </section>
 
     <section class="mx-auto max-w-6xl px-5 pb-12 sm:px-8">
-      <div class="mb-8 flex flex-wrap justify-center gap-3">
-        <button
-          v-for="category in categories"
-          :key="category.value"
-          type="button"
-          class="rounded-full border px-5 py-2.5 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#8a5a44] focus:ring-offset-2"
-          :class="
-            activeCategory === category.value
-              ? 'border-[#8a5a44] bg-[#8a5a44] text-white shadow-sm'
-              : 'border-[#d8c8bb] bg-white/70 text-[#5f4b43] hover:border-[#8a5a44] hover:bg-white'
-          "
-          @click="activeCategory = category.value"
-        >
-          {{ category.label }}
-        </button>
+      <div
+        class="sticky top-0 z-20 -mx-5 mb-8 overflow-x-auto bg-[#eeeeee]/95 px-5 py-3 backdrop-blur-sm [scrollbar-width:none] sm:-mx-8 sm:px-8 [&::-webkit-scrollbar]:hidden"
+      >
+        <div class="flex w-max min-w-full gap-3 sm:justify-center">
+          <button
+            v-for="category in categories"
+            :key="category.value"
+            type="button"
+            class="shrink-0 rounded-full border px-5 py-2.5 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#2fa084] focus:ring-offset-2"
+            :class="
+              activeCategory === category.value
+                ? 'border-[#2fa084] bg-[#2fa084] text-white shadow-sm'
+                : 'border-[#6fcf97] bg-white/70 text-[#1f6f5f] hover:border-[#2fa084] hover:bg-white'
+            "
+            @click="activeCategory = category.value"
+          >
+            {{ category.label }}
+          </button>
+        </div>
       </div>
 
       <div
-        v-if="filteredInvitations.length"
+        v-if="isLoading"
+        class="rounded-lg border border-[#6fcf97] bg-white/70 p-8 text-center text-[#1f6f5f]/80"
+      >
+        Taklifnomalar yuklanmoqda...
+      </div>
+
+      <div
+        v-else-if="errorMessage"
+        class="rounded-lg border border-[#6fcf97] bg-white/70 p-8 text-center text-[#1f6f5f]/80"
+      >
+        {{ errorMessage }}
+      </div>
+
+      <div
+        v-else-if="filteredInvitations.length"
         class="mx-auto grid w-fit grid-cols-1 justify-center justify-items-center gap-x-14 gap-y-12 sm:grid-cols-2 lg:grid-cols-3"
       >
         <InvitationCard
@@ -64,7 +96,7 @@ const filteredInvitations = computed(() => {
 
       <div
         v-else
-        class="rounded-lg border border-[#d8c8bb] bg-white/70 p-8 text-center text-[#6f5a51]"
+        class="rounded-lg border border-[#6fcf97] bg-white/70 p-8 text-center text-[#1f6f5f]/80"
       >
         Bu kategoriya uchun taklifnomalar hozircha mavjud emas.
       </div>

@@ -78,14 +78,14 @@ const openProduct = () => {
 
 <template>
   <article
-    class="flex h-full w-full max-w-72 cursor-pointer flex-col overflow-hidden rounded-xl bg-white shadow-md duration-500 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+    class="flex h-full w-full max-w-72 cursor-pointer flex-col overflow-hidden rounded-xl bg-white shadow-md duration-500 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[#2fa084] focus:ring-offset-2"
     role="link"
     tabindex="0"
     @click="openProduct"
     @keydown.enter="openProduct"
   >
     <div
-      class="relative h-56 w-full overflow-hidden rounded-t-xl bg-[#eadfd6]"
+      class="relative h-56 w-full overflow-hidden rounded-t-xl bg-[#6fcf97]/30"
       @touchstart.stop="startSwipe"
       @touchend.stop="endSwipe"
     >
@@ -97,7 +97,7 @@ const openProduct = () => {
       />
       <span
         v-if="invitation.badge"
-        class="absolute left-3 top-3 rounded-full bg-[#8a5a44] px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white shadow-sm"
+        class="absolute left-3 top-3 rounded-full bg-[#1f6f5f] px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white shadow-sm"
       >
         Mashhur
       </span>
@@ -119,13 +119,15 @@ const openProduct = () => {
 
     <div class="flex flex-1 flex-col px-4 py-2.5">
       <div>
-        <span class="mr-3 text-xs font-semibold uppercase tracking-wide text-gray-400">
+        <span class="mr-3 text-xs font-semibold uppercase tracking-wide text-[#2fa084]">
           {{ invitation.category }}
         </span>
-        <h2 class="mt-1 block truncate text-lg font-bold capitalize text-black">
+        <h2 class="mt-1 block truncate text-lg font-bold capitalize text-[#111]">
           {{ invitation.name }}
         </h2>
-        <p class="my-2 text-lg font-semibold text-black">{{ formatPrice(invitation.price) }}</p>
+        <p class="my-2 text-lg font-semibold text-[#111]">
+          {{ formatPrice(invitation.price) }}
+        </p>
       </div>
 
       <div class="mt-auto flex flex-col gap-3">
@@ -133,7 +135,7 @@ const openProduct = () => {
           :href="telegramUrl"
           target="_blank"
           rel="noreferrer"
-          class="rounded-full bg-[#229ed9] px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-[#168ac0] focus:outline-none focus:ring-2 focus:ring-[#229ed9] focus:ring-offset-2"
+          class="rounded-full bg-[#2fa084] px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-[#1f6f5f] focus:outline-none focus:ring-2 focus:ring-[#2fa084] focus:ring-offset-2"
           @click.stop
         >
           Telegram orqali sotib olish
