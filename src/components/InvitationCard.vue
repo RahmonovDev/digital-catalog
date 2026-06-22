@@ -78,14 +78,14 @@ const openProduct = () => {
 
 <template>
   <article
-    class="flex h-full w-full max-w-72 cursor-pointer flex-col overflow-hidden rounded-xl bg-white shadow-md duration-500 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[#2fa084] focus:ring-offset-2"
+    class="flex h-full w-full max-w-sm cursor-pointer flex-col overflow-hidden rounded-xl bg-white shadow-md duration-500 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[#2fa084] focus:ring-offset-2 sm:max-w-72"
     role="link"
     tabindex="0"
     @click="openProduct"
     @keydown.enter="openProduct"
   >
     <div
-      class="relative h-56 w-full overflow-hidden rounded-t-xl bg-[#6fcf97]/30"
+      class="relative h-60 w-full overflow-hidden rounded-t-xl bg-[#6fcf97]/30 sm:h-56"
       @touchstart.stop="startSwipe"
       @touchend.stop="endSwipe"
     >

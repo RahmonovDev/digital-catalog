@@ -85,7 +85,7 @@ onMounted(async () => {
 
       <div
         v-else-if="filteredInvitations.length"
-        class="mx-auto grid w-fit grid-cols-1 justify-center justify-items-center gap-x-14 gap-y-12 sm:grid-cols-2 lg:grid-cols-3"
+        class="mx-auto grid w-full grid-cols-1 justify-center justify-items-center gap-x-14 gap-y-12 sm:w-fit sm:grid-cols-2 lg:grid-cols-3"
       >
         <InvitationCard
           v-for="invitation in filteredInvitations"
