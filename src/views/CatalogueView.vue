@@ -4,6 +4,8 @@ import { computed, onMounted, ref } from 'vue'
 import { fetchInvitations } from '@/api/invitations'
 import InvitationCard from '@/components/InvitationCard.vue'
 
+const profileImage = '/profile.jpg'
+
 const categories = [
   { label: 'Hammasi', value: 'all' },
   { label: 'Klassik', value: 'klassik' },
@@ -41,6 +43,11 @@ onMounted(async () => {
       <p class="text-sm font-semibold uppercase tracking-[0.18em] text-[#111]">
         Taklifnomalar katalogi
       </p>
+      <img
+        :src="profileImage"
+        alt="FT Cards profil rasmi"
+        class="mx-auto mt-4 h-24 w-24 rounded-full border-4 border-white object-cover shadow-md sm:h-28 sm:w-28"
+      />
       <h1 class="mt-4 text-4xl font-bold sm:text-5xl">FT CARDS</h1>
       <p class="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#111]/80 sm:text-lg">
         "Taklifnoma - baxtingizning ilk va eng go'zal muhridir."

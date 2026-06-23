@@ -21,7 +21,20 @@
           >
             Telegram
           </a>
-          <a href="#" class="transition hover:text-[#6fcf97]">Instagram</a>
+          <a
+            href="https://www.instagram.com/ft_cards_fergana_taklifnomalar/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="transition hover:text-[#6fcf97]"
+          >
+            Instagram
+          </a>
+          <a
+            href="tel:+998904214141"
+            class="transition hover:text-[#6fcf97]"
+          >
+            Telefon: +998 90 421 41 41
+          </a>
         </div>
       </div>
 
