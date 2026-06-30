@@ -14,7 +14,7 @@ const TELEGRAM_USERNAME = 'Ft_Cards_Fergana'
 
 const formatPrice = (price) => `${new Intl.NumberFormat('uz-UZ').format(price)} so'm`
 const orderText = encodeURIComponent(
-  `Salom! Men ${props.invitation.name} taklifnomasini olmoqchiman.`,
+  `Salom! Men shu taklifnomasini olmoqchiman.\nhttps://ftcardsfergana.uz/products/${props.invitation.id}`,
 )
 
 const telegramUrl = `https://t.me/${TELEGRAM_USERNAME}?text=${orderText}`

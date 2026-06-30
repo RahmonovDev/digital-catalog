@@ -1,40 +1,20 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 
-import { fetchInvitations } from '@/api/invitations'
+import { useInvitationsStore } from '@/stores/invitations'
 import InvitationCard from '@/components/InvitationCard.vue'
 
 const profileImage = '/profile.jpg'
-
-const categories = [
-  { label: 'Hammasi', value: 'all' },
-  { label: 'Klassik', value: 'klassik' },
-  { label: 'Zamonaviy', value: 'zamonaviy' },
-  { label: 'Tabiat', value: 'tabiat' },
-  { label: 'Lux', value: 'lux' },
-]
-
+const store = useInvitationsStore()
 const activeCategory = ref('all')
-const invitations = ref([])
-const isLoading = ref(true)
-const errorMessage = ref('')
 
 const filteredInvitations = computed(() => {
-  if (activeCategory.value === 'all') return invitations.value
+  if (activeCategory.value === 'all') return store.invitations
 
-  return invitations.value.filter((invitation) => invitation.category === activeCategory.value)
+  return store.invitations.filter((invitation) => invitation.category === activeCategory.value)
 })
 
-onMounted(async () => {
-  try {
-    invitations.value = await fetchInvitations()
-  } catch (error) {
-    errorMessage.value = "Taklifnomalarni yuklab bo'lmadi."
-    console.error(error)
-  } finally {
-    isLoading.value = false
-  }
-})
+onMounted(() => store.load())
 </script>
 
 <template>
@@ -60,7 +40,7 @@ onMounted(async () => {
       >
         <div class="flex w-max min-w-full gap-3 sm:justify-center">
           <button
-            v-for="category in categories"
+            v-for="category in store.categories"
             :key="category.value"
             type="button"
             class="shrink-0 rounded-full border px-5 py-2.5 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#2fa084] focus:ring-offset-2"
@@ -77,17 +57,17 @@ onMounted(async () => {
       </div>
 
       <div
-        v-if="isLoading"
+        v-if="store.isLoading"
         class="rounded-lg border border-[#6fcf97] bg-white/70 p-8 text-center text-[#1f6f5f]/80"
       >
         Taklifnomalar yuklanmoqda...
       </div>
 
       <div
-        v-else-if="errorMessage"
+        v-else-if="store.errorMessage"
         class="rounded-lg border border-[#6fcf97] bg-white/70 p-8 text-center text-[#1f6f5f]/80"
       >
-        {{ errorMessage }}
+        {{ store.errorMessage }}
       </div>
 
       <div

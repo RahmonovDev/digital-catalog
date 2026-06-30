@@ -2,7 +2,7 @@
 import { computed, onMounted, ref, watch } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 
-import { fetchInvitations } from '@/api/invitations'
+import { useInvitationsStore } from '@/stores/invitations'
 
 const props = defineProps({
   id: {
@@ -13,11 +13,9 @@ const props = defineProps({
 
 const router = useRouter()
 const TELEGRAM_USERNAME = 'Ft_Cards_Fergana'
+const store = useInvitationsStore()
 
-const invitations = ref([])
-const isLoading = ref(true)
-const errorMessage = ref('')
-const invitation = computed(() => invitations.value.find((item) => item.id === Number(props.id)))
+const invitation = computed(() => store.invitations.find((item) => item.id === Number(props.id)))
 const selectedPhotoIndex = ref(0)
 const photos = computed(() => {
   if (!invitation.value) return []
@@ -47,39 +45,38 @@ const telegramUrl = computed(() => {
   return `https://t.me/${TELEGRAM_USERNAME}?text=${orderText}`
 })
 
-onMounted(async () => {
-  try {
-    invitations.value = await fetchInvitations()
-  } catch (error) {
-    errorMessage.value = "Taklifnomani yuklab bo'lmadi."
-    console.error(error)
-  } finally {
-    isLoading.value = false
+const goBack = () => {
+  if (window.history.state?.back) {
+    router.back()
+  } else {
+    router.push('/')
   }
-})
+}
+
+onMounted(() => store.load())
 </script>
 
 <template>
   <main class="min-h-screen bg-[#eeeeee] text-[#1f6f5f]">
     <section
-      v-if="isLoading"
+      v-if="store.isLoading"
       class="mx-auto max-w-3xl px-5 py-20 text-center text-[#1f6f5f]/70 sm:px-8"
     >
       Taklifnoma yuklanmoqda...
     </section>
 
     <section
-      v-else-if="errorMessage"
+      v-else-if="store.errorMessage"
       class="mx-auto max-w-3xl px-5 py-20 text-center text-[#1f6f5f]/70 sm:px-8"
     >
-      {{ errorMessage }}
+      {{ store.errorMessage }}
     </section>
 
     <section v-else-if="invitation" class="mx-auto max-w-5xl px-5 py-8 sm:px-8 sm:py-10">
       <button
         type="button"
         class="mb-8 text-xs font-semibold uppercase tracking-widest text-[#2fa084] transition hover:text-[#1f6f5f]"
-        @click="router.back()"
+        @click="goBack"
       >
         &lt; Orqaga
       </button>
