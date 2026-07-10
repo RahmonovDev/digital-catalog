@@ -18,6 +18,12 @@ const router = createRouter({
       props: true,
     },
   ],
+  scrollBehavior(_to, _from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    }
+    return { top: 0 }
+  },
 })
 
 export default router
