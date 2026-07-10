@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 
 import { useInvitationsStore } from '@/stores/invitations'
 import InvitationCard from '@/components/InvitationCard.vue'
@@ -13,7 +13,31 @@ const filteredInvitations = computed(() => {
   return store.invitations.filter((invitation) => invitation.category === activeCategory.value)
 })
 
-onMounted(() => store.load())
+const tabRefs = ref([])
+const indicator = ref({ left: '0px', width: '0px' })
+
+const setTabRef = (el, index) => {
+  if (el) tabRefs.value[index] = el
+}
+
+const updateIndicator = () => {
+  const index = store.categories.findIndex((category) => category.value === activeCategory.value)
+  const el = tabRefs.value[index]
+  if (!el) return
+
+  indicator.value = { left: `${el.offsetLeft}px`, width: `${el.offsetWidth}px` }
+}
+
+watch([activeCategory, () => store.categories], () => nextTick(updateIndicator), {
+  immediate: true,
+})
+
+onMounted(() => {
+  store.load()
+  window.addEventListener('resize', updateIndicator)
+})
+
+onUnmounted(() => window.removeEventListener('resize', updateIndicator))
 </script>
 
 <template>
@@ -32,7 +56,7 @@ onMounted(() => store.load())
       <div
         class="sticky top-0 z-20 -mx-5 mb-8 overflow-x-auto bg-[#faf7f2]/95 px-5 py-3 backdrop-blur-sm [scrollbar-width:none] sm:-mx-8 sm:px-8 [&::-webkit-scrollbar]:hidden"
       >
-        <div class="flex w-max min-w-full gap-3 sm:justify-center">
+        <div class="relative flex w-max min-w-full gap-3 border-b border-[#1f6f5f]/10 sm:justify-center">
           <template v-if="store.isLoading">
             <div
               v-for="i in 5"
@@ -42,26 +66,31 @@ onMounted(() => store.load())
           </template>
           <template v-else>
             <button
-              v-for="category in store.categories"
+              v-for="(category, index) in store.categories"
               :key="category.value"
+              :ref="(el) => setTabRef(el, index)"
               type="button"
-              class="shrink-0 border-b-2 px-3 pb-2 pt-1 text-sm font-semibold transition focus:outline-none"
+              class="shrink-0 px-3 pb-2 pt-1 text-sm font-semibold transition-all duration-200 ease-out will-change-transform hover:-translate-y-0.5 focus:outline-none active:scale-95"
               :class="
                 activeCategory === category.value
-                  ? 'border-[#2fa084] text-[#1f6f5f]'
-                  : 'border-transparent text-[#1f6f5f] hover:text-[#1f6f5f]'
+                  ? 'text-[#1f6f5f]'
+                  : 'text-[#1f6f5f]/60 hover:text-[#1f6f5f]'
               "
               @click="activeCategory = category.value"
             >
               {{ category.label }}
             </button>
+            <span
+              class="pointer-events-none absolute bottom-0 h-0.5 rounded-full bg-[#2fa084] transition-all duration-300 ease-out"
+              :style="{ left: indicator.left, width: indicator.width }"
+            />
           </template>
         </div>
       </div>
 
       <div
         v-if="store.isLoading"
-        class="mx-auto grid w-full grid-cols-1 justify-center justify-items-center gap-x-14 gap-y-12 sm:w-fit sm:grid-cols-2 lg:grid-cols-3"
+        class="mx-auto grid w-full grid-cols-2 justify-center justify-items-center gap-x-4 gap-y-8 sm:w-fit sm:gap-x-14 sm:gap-y-12 sm:grid-cols-2 lg:grid-cols-3"
       >
         <div
           v-for="i in 6"
@@ -86,7 +115,7 @@ onMounted(() => store.load())
 
       <div
         v-else-if="filteredInvitations.length"
-        class="mx-auto grid w-full grid-cols-1 justify-center justify-items-center gap-x-14 gap-y-12 sm:w-fit sm:grid-cols-2 lg:grid-cols-3"
+        class="mx-auto grid w-full grid-cols-2 justify-center justify-items-center gap-x-4 gap-y-8 sm:w-fit sm:gap-x-14 sm:gap-y-12 sm:grid-cols-2 lg:grid-cols-3"
       >
         <InvitationCard
           v-for="invitation in filteredInvitations"

@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(npm init *)",
+      "Bash(npm install *)",
+      "Bash(node shot.js)",
+      "Bash(node debug.js)",
+      "Bash(sed -i 's#/product/10#/products/10#g' shot.js)",
+      "Bash(node shot3.js)",
+      "Bash(curl -s \"http://localhost:1337/api/invitations?populate[photos]=true&populate[category]=*&sort[0]=order:asc\")",
+      "Bash(node -e ' *)",
+      "Bash(curl -s \"http://localhost:1337/api/invitations?populate[photos]=true&populate[category]=*&sort[0]=order:asc\" -o \"C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-User-projects-digital-catalog\\\\f2216fc9-cdd3-4a14-a251-fcef20e3de39\\\\scratchpad\\\\inv.json\")",
+      "Bash(curl -s 'http://localhost:1337/api/invitations?populate[photos]=true&populate[category]=*&sort[0]=order:asc' -o /c/Users/User/AppData/Local/Temp/claude/c--Users-User-projects-digital-catalog/f2216fc9-cdd3-4a14-a251-fcef20e3de39/scratchpad/inv.json)",
+      "Bash(ls -la \"/c/Users/User/AppData/Local/Temp/claude/c--Users-User-projects-digital-catalog/f2216fc9-cdd3-4a14-a251-fcef20e3de39/scratchpad/inv.json\")",
+      "Read(//c/Users/User/AppData/Local/Temp/claude/c--Users-User-projects-digital-catalog/f2216fc9-cdd3-4a14-a251-fcef20e3de39/scratchpad/**)",
+      "Bash(curl -sv \"http://localhost:1337/api/invitations?populate[photos]=true&populate[category]=*&sort[0]=order:asc\")",
+      "Bash(curl -s \"http://localhost:1337/api/invitations\")",
+      "Bash(curl -sg \"http://localhost:1337/api/invitations?populate[photos]=true&sort[0]=order:asc\")",
+      "Bash(node shot4.js)",
+      "Bash(timeout 15 bash -c 'until curl -sf http://localhost:5183/ >/dev/null; do sleep 1; done')"
+    ]
+  }
+}
