@@ -18,7 +18,7 @@ onMounted(() => store.load())
 
 <template>
   <main class="min-h-screen bg-[#faf7f2] text-[#1f6f5f]">
-    <section class="mx-auto max-w-6xl px-5 pb-10 pt-16 text-center sm:px-8 sm:pt-24">
+    <section class="mx-auto max-w-6xl px-5 pb-10 pt-12 text-center sm:px-8 sm:pt-12">
       <p class="text-xs font-semibold uppercase tracking-[0.25em] text-[#2fa084]">
         Taklifnomalar katalogi
       </p>

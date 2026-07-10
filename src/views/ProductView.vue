@@ -39,7 +39,7 @@ const telegramUrl = computed(() => {
   if (!invitation.value) return '#'
 
   const orderText = encodeURIComponent(
-    `Salom! Men ${invitation.value.name} taklifnomasini olmoqchiman.`,
+    `Salom! Men shu taklifnomani olmoqchiman.\n${window.location.href}`,
   )
 
   return `https://t.me/${TELEGRAM_USERNAME}?text=${orderText}`
@@ -146,13 +146,6 @@ onMounted(() => store.load())
             {{ formatPrice(invitation.price) }}
           </p>
 
-          <p class="mt-6 max-w-xl text-sm leading-7 text-[#1f6f5f]/75">
-            {{
-              invitation.description ||
-              "Ushbu raqamli taklifnoma to'y marosimingiz uchun zamonaviy va nafis ko'rinish beradi. Buyurtma berish uchun Telegram orqali yozing."
-            }}
-          </p>
-
           <a
             :href="telegramUrl"
             target="_blank"
@@ -161,6 +154,13 @@ onMounted(() => store.load())
           >
             Telegram orqali sotib olish
           </a>
+
+          <p class="mt-6 max-w-xl text-sm leading-7 text-[#1f6f5f]/75">
+            {{
+              invitation.description ||
+              "Ushbu raqamli taklifnoma to'y marosimingiz uchun zamonaviy va nafis ko'rinish beradi. Buyurtma berish uchun Telegram orqali yozing."
+            }}
+          </p>
         </div>
       </div>
     </section>
