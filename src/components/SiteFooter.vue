@@ -19,7 +19,7 @@
             rel="noopener noreferrer"
             class="transition hover:text-[#6fcf97]"
           >
-            Telegram
+            Telegram: @Ft_Cards_Fergana
           </a>
           <a
             href="https://www.instagram.com/ft_cards_fergana_taklifnomalar/"
@@ -27,13 +27,19 @@
             rel="noopener noreferrer"
             class="transition hover:text-[#6fcf97]"
           >
-            Instagram
+            Instagram: @ft_cards_fergana_taklifnomalar
           </a>
           <a
             href="tel:+998904214141"
             class="transition hover:text-[#6fcf97]"
           >
             Telefon: +998 90 421 41 41
+          </a>
+          <a
+            href="tel:+998978144141"
+            class="transition hover:text-[#6fcf97]"
+          >
+            +998 97 814 41 41
           </a>
         </div>
       </div>
@@ -42,7 +48,7 @@
         <p class="text-sm font-semibold uppercase tracking-[0.14em]">Ma'lumot</p>
         <div class="mt-4 space-y-3 text-sm leading-6 text-[#eeeeee]/80">
           <p>Farg'ona, O'zbekiston</p>
-          <p>Du–Sha 9:00–18:00</p>
+          <p>Du–Yak 9:00–18:00</p>
         </div>
       </div>
     </div>

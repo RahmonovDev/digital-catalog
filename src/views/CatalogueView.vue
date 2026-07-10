@@ -4,7 +4,6 @@ import { computed, onMounted, ref } from 'vue'
 import { useInvitationsStore } from '@/stores/invitations'
 import InvitationCard from '@/components/InvitationCard.vue'
 
-const profileImage = '/profile.jpg'
 const store = useInvitationsStore()
 const activeCategory = ref('all')
 
@@ -18,32 +17,27 @@ onMounted(() => store.load())
 </script>
 
 <template>
-  <main class="min-h-screen bg-[#eeeeee] text-[#1f6f5f]">
-    <section class="mx-auto max-w-6xl px-5 pb-8 pt-14 text-center sm:px-8 sm:pt-10">
-      <p class="text-sm font-semibold uppercase tracking-[0.18em] text-[#111]">
+  <main class="min-h-screen bg-[#faf7f2] text-[#1f6f5f]">
+    <section class="mx-auto max-w-6xl px-5 pb-10 pt-16 text-center sm:px-8 sm:pt-24">
+      <p class="text-xs font-semibold uppercase tracking-[0.25em] text-[#2fa084]">
         Taklifnomalar katalogi
       </p>
-      <img
-        :src="profileImage"
-        alt="FT Cards profil rasmi"
-        class="mx-auto mt-4 h-24 w-24 rounded-full border-4 border-white object-cover shadow-md sm:h-28 sm:w-28"
-      />
-      <h1 class="mt-4 text-4xl font-bold sm:text-5xl">FT CARDS</h1>
-      <p class="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#111]/80 sm:text-lg">
+      <h1 class="mt-3 text-6xl font-bold tracking-tight text-[#111] sm:text-7xl">FT CARDS</h1>
+      <p class="mx-auto mt-4 max-w-xs text-sm text-[#111]/50">
         "Taklifnoma - baxtingizning ilk va eng go'zal muhridir."
       </p>
     </section>
 
     <section class="mx-auto max-w-6xl px-5 pb-12 sm:px-8">
       <div
-        class="sticky top-0 z-20 -mx-5 mb-8 overflow-x-auto bg-[#eeeeee]/95 px-5 py-3 backdrop-blur-sm [scrollbar-width:none] sm:-mx-8 sm:px-8 [&::-webkit-scrollbar]:hidden"
+        class="sticky top-0 z-20 -mx-5 mb-8 overflow-x-auto bg-[#faf7f2]/95 px-5 py-3 backdrop-blur-sm [scrollbar-width:none] sm:-mx-8 sm:px-8 [&::-webkit-scrollbar]:hidden"
       >
         <div class="flex w-max min-w-full gap-3 sm:justify-center">
           <template v-if="store.isLoading">
             <div
               v-for="i in 5"
               :key="i"
-              class="h-10 w-24 shrink-0 animate-pulse rounded-full bg-gray-300"
+              class="h-4 w-20 shrink-0 animate-pulse rounded bg-stone-300"
             />
           </template>
           <template v-else>
@@ -51,11 +45,11 @@ onMounted(() => store.load())
               v-for="category in store.categories"
               :key="category.value"
               type="button"
-              class="shrink-0 rounded-full border px-5 py-2.5 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#2fa084] focus:ring-offset-2"
+              class="shrink-0 border-b-2 px-3 pb-2 pt-1 text-sm font-semibold transition focus:outline-none"
               :class="
                 activeCategory === category.value
-                  ? 'border-[#2fa084] bg-[#2fa084] text-white shadow-sm'
-                  : 'border-[#6fcf97] bg-white/70 text-[#1f6f5f] hover:border-[#2fa084] hover:bg-white'
+                  ? 'border-[#2fa084] text-[#1f6f5f]'
+                  : 'border-transparent text-[#1f6f5f] hover:text-[#1f6f5f]'
               "
               @click="activeCategory = category.value"
             >
@@ -74,12 +68,11 @@ onMounted(() => store.load())
           :key="i"
           class="w-full max-w-sm animate-pulse overflow-hidden rounded-xl bg-white shadow-md sm:max-w-72"
         >
-          <div class="h-60 bg-gray-200 sm:h-56" />
+          <div class="aspect-[3/4] w-full bg-stone-200" />
           <div class="px-4 py-3">
-            <div class="h-3 w-16 rounded bg-gray-200" />
-            <div class="mt-2 h-5 w-36 rounded bg-gray-200" />
-            <div class="my-2 h-5 w-24 rounded bg-gray-200" />
-            <div class="mt-3 h-10 w-full rounded-full bg-gray-200" />
+            <div class="h-3 w-16 rounded bg-stone-200" />
+            <div class="mt-2 h-5 w-36 rounded bg-stone-200" />
+            <div class="mt-1 h-4 w-24 rounded bg-stone-200" />
           </div>
         </div>
       </div>

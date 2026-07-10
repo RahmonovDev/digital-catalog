@@ -10,14 +10,8 @@ const props = defineProps({
 })
 
 const router = useRouter()
-const TELEGRAM_USERNAME = 'Ft_Cards_Fergana'
 
 const formatPrice = (price) => `${new Intl.NumberFormat('uz-UZ').format(price)} so'm`
-const orderText = encodeURIComponent(
-  `Salom! Men shu taklifnomasini olmoqchiman.\nhttps://ftcardsfergana.uz/products/${props.invitation.id}`,
-)
-
-const telegramUrl = `https://t.me/${TELEGRAM_USERNAME}?text=${orderText}`
 const photos = computed(() => {
   if (Array.isArray(props.invitation.photos) && props.invitation.photos.length) {
     return props.invitation.photos
@@ -85,7 +79,7 @@ const openProduct = () => {
     @keydown.enter="openProduct"
   >
     <div
-      class="relative h-60 w-full overflow-hidden rounded-t-xl bg-[#6fcf97]/30 sm:h-56"
+      class="relative aspect-[3/4] w-full overflow-hidden rounded-t-xl bg-[#6fcf97]/30"
       @touchstart.stop="startSwipe"
       @touchend.stop="endSwipe"
     >
@@ -117,30 +111,16 @@ const openProduct = () => {
       </div>
     </div>
 
-    <div class="flex flex-1 flex-col px-4 py-2.5">
-      <div>
-        <span class="mr-3 text-xs font-semibold uppercase tracking-wide text-[#2fa084]">
-          {{ invitation.category }}
-        </span>
-        <h2 class="mt-1 block truncate text-lg font-bold capitalize text-[#111]">
-          {{ invitation.name }}
-        </h2>
-        <p class="my-2 text-lg font-semibold text-[#111]">
-          {{ formatPrice(invitation.price) }}
-        </p>
-      </div>
-
-      <div class="mt-auto flex flex-col gap-3">
-        <a
-          :href="telegramUrl"
-          target="_blank"
-          rel="noreferrer"
-          class="rounded-full bg-[#2fa084] px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-[#1f6f5f] focus:outline-none focus:ring-2 focus:ring-[#2fa084] focus:ring-offset-2"
-          @click.stop
-        >
-          Telegram orqali sotib olish
-        </a>
-      </div>
+    <div class="px-4 py-3">
+      <span class="text-xs font-semibold uppercase tracking-wide text-[#2fa084]">
+        {{ invitation.category }}
+      </span>
+      <h2 class="mt-1 block truncate text-lg font-bold capitalize text-[#111]">
+        {{ invitation.name }}
+      </h2>
+      <p class="mt-1 text-base font-semibold text-[#111]">
+        {{ formatPrice(invitation.price) }}
+      </p>
     </div>
   </article>
 </template>

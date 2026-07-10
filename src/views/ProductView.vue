@@ -57,28 +57,28 @@ onMounted(() => store.load())
 </script>
 
 <template>
-  <main class="min-h-screen bg-[#eeeeee] text-[#1f6f5f]">
+  <main class="min-h-screen bg-[#faf7f2] text-[#1f6f5f]">
     <section v-if="store.isLoading" class="mx-auto max-w-5xl px-5 py-8 sm:px-8 sm:py-10">
-      <div class="mb-8 h-4 w-16 animate-pulse rounded bg-gray-300" />
+      <div class="mb-8 h-4 w-16 animate-pulse rounded bg-stone-300" />
 
       <div class="grid gap-8 md:grid-cols-[minmax(0,420px)_1fr] md:items-start">
         <div class="animate-pulse">
-          <div class="aspect-[3/4] w-full rounded-lg bg-gray-200" />
+          <div class="aspect-[3/4] w-full rounded-lg bg-stone-200" />
           <div class="mt-3 flex gap-2">
-            <div v-for="i in 3" :key="i" class="h-20 w-16 shrink-0 rounded-md bg-gray-200" />
+            <div v-for="i in 3" :key="i" class="h-20 w-16 shrink-0 rounded-md bg-stone-200" />
           </div>
         </div>
 
         <div class="animate-pulse space-y-4 md:pt-6">
-          <div class="h-3 w-20 rounded bg-gray-200" />
-          <div class="h-10 w-52 rounded bg-gray-200" />
-          <div class="h-5 w-28 rounded bg-gray-200" />
+          <div class="h-3 w-20 rounded bg-stone-200" />
+          <div class="h-10 w-52 rounded bg-stone-200" />
+          <div class="h-5 w-28 rounded bg-stone-200" />
           <div class="mt-6 space-y-2">
-            <div class="h-4 w-full rounded bg-gray-200" />
-            <div class="h-4 w-full rounded bg-gray-200" />
-            <div class="h-4 w-3/4 rounded bg-gray-200" />
+            <div class="h-4 w-full rounded bg-stone-200" />
+            <div class="h-4 w-full rounded bg-stone-200" />
+            <div class="h-4 w-3/4 rounded bg-stone-200" />
           </div>
-          <div class="mt-8 h-12 w-full rounded-full bg-gray-200 sm:w-72" />
+          <div class="mt-8 h-12 w-full rounded-full bg-stone-200 sm:w-72" />
         </div>
       </div>
     </section>
