@@ -1,5 +1,5 @@
 const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || 'http://localhost:1337'
-const INVITATIONS_ENDPOINT = `${STRAPI_URL}/api/invitations?populate[photos]=true&populate[category]=*&sort[0]=order:asc`
+const INVITATIONS_ENDPOINT = `${STRAPI_URL}/api/invitations?populate[photos]=true&populate[category]=*&sort[0]=order:asc&pagination[pageSize]=1000`
 const CATEGORIES_ENDPOINT = `${STRAPI_URL}/api/categories?sort[0]=order:asc`
 
 const absoluteUrl = (url) => {
